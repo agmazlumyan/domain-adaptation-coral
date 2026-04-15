@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Data — ignore all files but preserve folder structure via .gitkeep
+data/**
+!data/**/
+!data/**/.gitkeep
