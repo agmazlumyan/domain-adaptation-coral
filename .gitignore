@@ -8,3 +8,9 @@
 data/**
 !data/**/
 !data/**/.gitkeep
+
+# Python virtual environment
+.venv/
+
+# Other
+TEMP_preprocessing.ipynb

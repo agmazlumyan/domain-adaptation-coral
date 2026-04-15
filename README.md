@@ -15,6 +15,29 @@ In the app, the implemented DA feature will consist of a target-data collection 
 | Source | CICIDS2017 |
 | Target | CIC-ToN-IoT |
 
+## Shared Artifacts
+
+The CORAL framework assumes source and target datasets are represented in the same feature and label spaces before adaptation is applied. To enforce this consistently, shared external contract files are used so both pipelines consume the same canonical definitions.
+
+This project uses a fixed external feature-space contract at
+`data/processed/shared_feature_space.json` to prevents source/target schema drift.
+
+For label-space alignment, the project uses shared label artifacts:
+- `data/processed/shared_label_space.json`: canonical ordered list of common labels.
+- `data/processed/source_label_map.json`: maps source raw classes to canonical labels.
+- `data/processed/target_label_map.json`: maps target raw classes to canonical labels.
+
+Both datasets are mapped into the same canonical label space before encoding so label
+integers stay consistent across source/target training and evaluation.
+
+- The JSON file contains the canonical ordered list of shared features.
+- Both preprocessing notebooks consume this file directly.
+- Feature alignment is strict by default:
+   - Columns not in the contract are dropped.
+   - Missing contract columns raise an error.
+- Preserving column order is required so reused scalers and downstream models
+   receive the same input schema across source and target domains.
+
 ## Steps
 
 1. **Prepare CICIDS2017 and CIC-ToN-IoT**
@@ -27,3 +50,26 @@ In the app, the implemented DA feature will consist of a target-data collection 
    - With CORAL
    - Without CORAL
 5. **Compare performance** using ground truth labels
+
+## Setup: Virtual Environment & Dependencies
+
+To ensure a clean Python environment and install all required dependencies:
+
+1. **Create a virtual environment (venv):**
+   
+   On Windows:
+   ```sh
+   python -m venv venv
+   venv\Scripts\activate
+   ```
+   On macOS/Linux:
+   ```sh
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+2. **Install dependencies:**
+   ```sh
+   pip install -r requirements.txt
+   ```
+
+This will install all necessary packages as specified in requirements.txt.
