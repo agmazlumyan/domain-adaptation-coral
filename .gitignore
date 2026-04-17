@@ -12,5 +12,10 @@ data/**
 # Python virtual environment
 .venv/
 
+# Models — ignore all files but preserve folder structure via .gitkeep
+models/**
+!models/**/
+!models/**/.gitkeep
+
 # Other
 TEMP_preprocessing.ipynb

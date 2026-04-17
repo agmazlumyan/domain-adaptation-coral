@@ -51,6 +51,23 @@ integers stay consistent across source/target training and evaluation.
    - Without CORAL
 5. **Compare performance** using ground truth labels
 
+## Preprocessing Notebook Steps
+
+The tables below reflect the current cell-title steps from both preprocessing notebooks.
+
+| src_preprocessing.ipynb | trg_preprocessing.ipynb |
+|---|---|
+| 1. Imports | 1. Imports |
+| 2. Import and concatenate CSVs | 2. Import CSV |
+| 3. Data sanitization | 3. Data sanitization |
+| 4. Feature-space alignment | 4. Feature-space alignment (align features according to predetermined shared feature space) |
+| 5. Label-space alignment | 5. Label-space alignment (align labels according to predetermined shared label space) |
+| 6. Train/Val/Test Split | 6. Scaling (reuse scaler of source dataset) |
+| 7. Scaling (save scaler for CIC_ToN_IoT) | 7. Label encoding (reuse encoder of shared label space) |
+| 8. Label encoding (save encoder for CIC_ToN_IoT) | 8. Calculate and export covariance and mean statistics |
+| 9. Calculate and export covariance and mean statistics | 9. Export processed data |
+| 10. Export processed data |  |
+
 ## Setup: Virtual Environment & Dependencies
 
 To ensure a clean Python environment and install all required dependencies:
