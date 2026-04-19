@@ -20,12 +20,16 @@ In the app, the implemented DA feature will consist of a target-data collection 
 The CORAL framework assumes source and target datasets are represented in the same feature and label spaces before adaptation is applied. To enforce this consistently, shared external contract files are used so both pipelines consume the same canonical definitions.
 
 This project uses a fixed external feature-space contract at
-`data/processed/shared_feature_space.json` to prevents source/target schema drift.
+`data/processed/shared_feature_space.json` to prevent source/target schema drift.
 
 For label-space alignment, the project uses shared label artifacts:
 - `data/processed/shared_label_space.json`: canonical ordered list of common labels.
 - `data/processed/source_label_map.json`: maps source raw classes to canonical labels.
 - `data/processed/target_label_map.json`: maps target raw classes to canonical labels.
+
+For target feature-space alignment, the project also uses:
+- `data/processed/target_feature_alias_map.json`: maps canonical shared feature names
+   to raw CIC-ToN-IoT column names.
 
 Both datasets are mapped into the same canonical label space before encoding so label
 integers stay consistent across source/target training and evaluation.
@@ -61,12 +65,38 @@ The tables below reflect the current cell-title steps from both preprocessing no
 | 2. Import and concatenate CSVs | 2. Import CSV |
 | 3. Data sanitization | 3. Data sanitization |
 | 4. Feature-space alignment | 4. Feature-space alignment (align features according to predetermined shared feature space) |
-| 5. Label-space alignment | 5. Label-space alignment (align labels according to predetermined shared label space) |
-| 6. Train/Val/Test Split | 6. Scaling (reuse scaler of source dataset) |
-| 7. Scaling (save scaler for CIC_ToN_IoT) | 7. Label encoding (reuse encoder of shared label space) |
-| 8. Label encoding (save encoder for CIC_ToN_IoT) | 8. Calculate and export covariance and mean statistics |
-| 9. Calculate and export covariance and mean statistics | 9. Export processed data |
-| 10. Export processed data |  |
+| 5. Label-space alignment | 5. Label-space alignment |
+| 6. Train/Test Split (80/20) | 6. Train/Test Split (80/20) |
+| 7. Scaling (fit and save source scaler) | 7. Scaling (reuse scaler of source dataset) |
+| 8. Label encoding (fit and save source encoder) | 8. Label encoding (reuse encoder of shared label space) |
+| 9. Calculate and export covariance and mean statistics | 9. Calculate and export covariance and mean statistics |
+| 10. Export processed data | 10. Export processed data |
+
+## Execution Order
+
+Run notebooks in this order so all required artifacts exist before training and CORAL
+evaluation:
+
+1. `src_preprocessing.ipynb`
+2. `trg_preprocessing.ipynb`
+3. `training_and_eval.ipynb`
+
+## Pipeline Outputs
+
+After preprocessing and before evaluation, these outputs should exist:
+
+- `data/processed/source/train.csv`
+- `data/processed/source/test.csv`
+- `data/processed/target/train.csv`
+- `data/processed/target/test.csv`
+- `models/source_scaler.joblib`
+- `models/label_encoder.joblib`
+- `models/coral_source_stats.joblib`
+- `models/coral_target_stats.joblib`
+
+The `training_and_eval.ipynb` notebook trains on processed source train data,
+evaluates on source test and target test, and reports target performance with and
+without CORAL adaptation.
 
 ## Setup: Virtual Environment & Dependencies
 
