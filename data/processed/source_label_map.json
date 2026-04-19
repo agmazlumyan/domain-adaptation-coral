@@ -1,0 +1,17 @@
+{
+  "BENIGN": "Benign",
+  "DDoS": "Denial of Service",
+  "DoS GoldenEye": "Denial of Service",
+  "DoS Hulk": "Denial of Service",
+  "DoS Slowhttptest": "Denial of Service",
+  "DoS slowloris": "Denial of Service",
+  "PortScan": "Probing",
+  "FTP-Patator": "Brute Force",
+  "SSH-Patator": "Brute Force",
+  "Web Attack – Brute Force": "Brute Force",
+  "Web Attack – Sql Injection": "Web Injection",
+  "Web Attack – XSS": "Web Injection",
+  "Bot": "Malware",
+  "Infiltration": "Malware",
+  "Heartbleed": "Malware"
+}

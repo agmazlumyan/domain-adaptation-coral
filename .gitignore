@@ -9,6 +9,9 @@ data/**
 !data/**/
 !data/**/.gitkeep
 
+# Keep processed JSON metadata artifacts in repo
+!data/processed/*.json
+
 # Python virtual environment
 .venv/
 

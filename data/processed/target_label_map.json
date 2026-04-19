@@ -1,0 +1,12 @@
+{
+    "Benign": "Benign",
+    "ddos": "Denial of Service",
+    "dos": "Denial of Service",
+    "scanning": "Probing",
+    "password": "Brute Force",
+    "injection": "Web Injection",
+    "xss": "Web Injection",
+    "backdoor": "Malware",
+    "ransomware": "Malware",
+    "mitm": "Malware"
+}
