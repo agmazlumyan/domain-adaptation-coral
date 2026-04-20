@@ -11,6 +11,9 @@
   "Web Attack – Brute Force": "Brute Force",
   "Web Attack – Sql Injection": "Web Injection",
   "Web Attack – XSS": "Web Injection",
+  "Web Attack � Brute Force": "Brute Force",
+  "Web Attack � Sql Injection": "Web Injection",
+  "Web Attack � XSS": "Web Injection",
   "Bot": "Malware",
   "Infiltration": "Malware",
   "Heartbleed": "Malware"
