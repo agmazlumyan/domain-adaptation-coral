@@ -8,6 +8,22 @@ Feature space and label space alignment across source and target datasets must b
 
 In the app, the implemented DA feature will consist of a target-data collection mechanism and will perform preprocessing and covariance calculation in the online app (as opposed to in an offline notebook environment). In this offline test, all procedures and computation will be performed in a notebook environment; the target-domain data (CIC-ToN-IoT) will be processed and feature-mapped in advance alongside the source-domain data (CICIDS2017), and CORAL calculation, model inference, and results extraction will be done in the notebooks as well.
 
+## Why This Iteration Was Abandoned
+
+This iteration was abandoned because the domain gap between CICIDS2017 and CIC-ToN-IoT was too large for the current CORAL + SVM approach to transfer effectively. In the evaluation notebook, the model achieved **0.95** source test accuracy, but target performance remained poor: **0.01** target test accuracy without CORAL and **0.33** with CORAL. CORAL improved results relative to the unadapted baseline, but not enough to make the approach viable for this source-target pair.
+
+The main issue was severe dataset shift between an enterprise-network dataset and an IoT-focused dataset. Without CORAL, target predictions effectively collapsed into a single dominant class, with **Probing recall = 1.00** while most other classes were almost entirely missed. That pattern is strong evidence that the target samples occupy a very different region of feature space than the source-domain training data, even when both datasets expose many CICFlowMeter-derived features.
+
+Several factors likely contributed to that mismatch:
+
+- **Different traffic environments:** IoT traffic patterns differ substantially from enterprise network traffic.
+- **Different attack behavior:** Attack implementations, timing characteristics, and packet or flow aggregation behavior are not directly comparable across the two datasets.
+- **Different class priors:** The class balance differs meaningfully between datasets, which further destabilized transfer.
+- **Lossy label alignment:** Re-mapping dataset-specific attack labels into generic shared buckets reduced semantic fidelity. A class such as "Brute Force" in CICIDS2017 does not necessarily resemble "Brute Force" traffic in CIC-ToN-IoT after feature extraction.
+- **Insufficient model capacity:** For a distribution shift of this magnitude, an SVM is too simple to learn representations that generalize robustly across domains.
+
+Taken together, these results suggest that this project iteration was limited less by CORAL implementation details and more by a fundamental mismatch between the selected datasets and the simplicity of the downstream classifier.
+
 ## Datasets
 
 | Role | Dataset |
