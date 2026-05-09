@@ -6,30 +6,22 @@ A controlled, offline experiment to verify the feasibility and effectiveness of 
 
 Feature space and label space alignment across source and target datasets must be done for CORAL domain adaptation. Label space alignment involves collapsing each dataset's specific attack classes into broader meta-categories representing a shared label space.
 
-In the app, the implemented DA feature will consist of a target-data collection mechanism and will perform preprocessing and covariance calculation in the online app (as opposed to in an offline notebook environment). In this offline test, all procedures and computation will be performed in a notebook environment; the target-domain data (CIC-ToN-IoT) will be processed and feature-mapped in advance alongside the source-domain data (CICIDS2017), and CORAL calculation, model inference, and results extraction will be done in the notebooks as well.
+In the app, the implemented DA feature will consist of a target-data collection mechanism and will perform preprocessing and covariance calculation in the online app (as opposed to in an offline notebook environment). In this offline test, all procedures and computation will be performed in a notebook environment; the target-domain data (CSE-CIC-IDS2018) will be processed and feature-mapped in advance alongside the source-domain data (CICIDS2017), and CORAL calculation, model inference, and results extraction will be done in the notebooks as well.
 
-## Why This Iteration Was Abandoned
+## New Version Info
 
-This iteration was abandoned because the domain gap between CICIDS2017 and CIC-ToN-IoT was too large for the current CORAL + SVM approach to transfer effectively. In the evaluation notebook, the model achieved **0.95** source test accuracy, but target performance remained poor: **0.01** target test accuracy without CORAL and **0.33** with CORAL. CORAL improved results relative to the unadapted baseline, but not enough to make the approach viable for this source-target pair.
+This iteration replaces the previous target dataset with CSE-CIC-IDS2018. The main reason for that change is to reduce the domain gap between source and target so the CORAL experiment evaluates adaptation under a more realistic and informative level of distribution shift.
 
-The main issue was severe dataset shift between an enterprise-network dataset and an IoT-focused dataset. Without CORAL, target predictions effectively collapsed into a single dominant class, with **Probing recall = 1.00** while most other classes were almost entirely missed. That pattern is strong evidence that the target samples occupy a very different region of feature space than the source-domain training data, even when both datasets expose many CICFlowMeter-derived features.
+In the earlier version, the target dataset differed too sharply from CICIDS2017 in both data characteristics and dataset construction, making it difficult to separate true domain-adaptation behavior from a broader cross-dataset mismatch. CSE-CIC-IDS2018 is still a distinct target domain, but it is closer in scenario, feature semantics, and attack-traffic structure to the CICIDS2017 source domain. That makes the comparison more controlled while still preserving a meaningful shift for adaptation.
 
-Several factors likely contributed to that mismatch:
-
-- **Different traffic environments:** IoT traffic patterns differ substantially from enterprise network traffic.
-- **Different attack behavior:** Attack implementations, timing characteristics, and packet or flow aggregation behavior are not directly comparable across the two datasets.
-- **Different class priors:** The class balance differs meaningfully between datasets, which further destabilized transfer.
-- **Lossy label alignment:** Re-mapping dataset-specific attack labels into generic shared buckets reduced semantic fidelity. A class such as "Brute Force" in CICIDS2017 does not necessarily resemble "Brute Force" traffic in CIC-ToN-IoT after feature extraction.
-- **Insufficient model capacity:** For a distribution shift of this magnitude, an SVM is too simple to learn representations that generalize robustly across domains.
-
-Taken together, these results suggest that this project iteration was limited less by CORAL implementation details and more by a fundamental mismatch between the selected datasets and the simplicity of the downstream classifier.
+The intent of this revision is not to eliminate the domain discrepancy, but to avoid a target setting where the mismatch is so severe that performance degradation is dominated by dataset incompatibility rather than by the adaptation problem itself. Using CSE-CIC-IDS2018 provides a better test bed for checking whether the preprocessing, shared feature/label contracts, and CORAL alignment produce measurable improvements on a target domain that is different, but not arbitrarily far from the source.
 
 ## Datasets
 
 | Role | Dataset |
 |------|---------|
 | Source | CICIDS2017 |
-| Target | CIC-ToN-IoT |
+| Target | CSE-CIC-IDS2018 |
 
 ## Shared Artifacts
 
@@ -45,7 +37,7 @@ For label-space alignment, the project uses shared label artifacts:
 
 For target feature-space alignment, the project also uses:
 - `data/processed/target_feature_alias_map.json`: maps canonical shared feature names
-   to raw CIC-ToN-IoT column names.
+   to raw target-dataset column names.
 
 Both datasets are mapped into the same canonical label space before encoding so label
 integers stay consistent across source/target training and evaluation.
@@ -60,13 +52,13 @@ integers stay consistent across source/target training and evaluation.
 
 ## Steps
 
-1. **Prepare CICIDS2017 and CIC-ToN-IoT**
+1. **Prepare CICIDS2017 and CSE-CIC-IDS2018**
    - Apply same preprocessing and scaling
    - Normalize feature space
    - Extract covariance statistics
 2. **Train model on CICIDS2017**
 3. **Calculate CORAL transform**
-4. **Perform model inference on CIC-ToN-IoT**
+4. **Perform model inference on CSE-CIC-IDS2018**
    - With CORAL
    - Without CORAL
 5. **Compare performance** using ground truth labels
