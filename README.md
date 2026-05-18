@@ -62,15 +62,16 @@ The tables below reflect the current cell-title steps from both preprocessing no
 | src_preprocessing.ipynb | trg_preprocessing.ipynb |
 |---|---|
 | 1. Imports | 1. Imports |
-| 2. Import and concatenate CSVs | 2. Import CSV |
-| 3. Data sanitization | 3. Data sanitization |
-| 4. Feature-space alignment | 4. Feature-space alignment (align features according to predetermined shared feature space) |
-| 5. Label-space alignment | 5. Label-space alignment |
-| 6. Train/Test Split (80/20) | 6. Train/Test Split (80/20) |
-| 7. Scaling (fit and save source scaler) | 7. Scaling (reuse scaler of source dataset) |
-| 8. Label encoding (fit and save source encoder) | 8. Label encoding (reuse encoder of shared label space) |
-| 9. Calculate and export covariance and mean statistics | 9. Calculate and export covariance and mean statistics |
-| 10. Export processed data | 10. Export processed data |
+| 2. Load and concatenate CSVs | 2. Load and concatenate CSVs |
+| 3. Data sanitization | 3. Data reduction |
+| 4. Feature-space alignment | 4. Data sanitization |
+| 5. Label-space alignment | 5. Feature-space alignment |
+| 6. Train/Test Split (80/20) | 6. Label-space alignment |
+| 7. Scaling (fit to source and save) | 7. Train/Test Split (80/20) |
+| 8. Label encoding (fit to source and save) | 8. Scaling (reuse source-fitted scaler) |
+| 9. Calculate and export covariance and mean statistics | 9. Label encoding (reuse source-fitted encoder) |
+| 10. Export processed data | 10. Calculate and export covariance and mean statistics |
+|  | 11. Export processed data |
 
 ## Execution Order
 
