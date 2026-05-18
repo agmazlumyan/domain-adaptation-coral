@@ -10,11 +10,7 @@ In the app, the implemented DA feature will consist of a target-data collection 
 
 ## New Version Info
 
-This iteration replaces the previous target dataset with CSE-CIC-IDS2018. The main reason for that change is to reduce the domain gap between source and target so the CORAL experiment evaluates adaptation under a more realistic and informative level of distribution shift.
-
-In the earlier version, the target dataset differed too sharply from CICIDS2017 in both data characteristics and dataset construction, making it difficult to separate true domain-adaptation behavior from a broader cross-dataset mismatch. CSE-CIC-IDS2018 is still a distinct target domain, but it is closer in scenario, feature semantics, and attack-traffic structure to the CICIDS2017 source domain. That makes the comparison more controlled while still preserving a meaningful shift for adaptation.
-
-The intent of this revision is not to eliminate the domain discrepancy, but to avoid a target setting where the mismatch is so severe that performance degradation is dominated by dataset incompatibility rather than by the adaptation problem itself. Using CSE-CIC-IDS2018 provides a better test bed for checking whether the preprocessing, shared feature/label contracts, and CORAL alignment produce measurable improvements on a target domain that is different, but not arbitrarily far from the source.
+This iteration replaces the previous target dataset with CSE-CIC-IDS2018 to address the severe domain gap between CICIDS2017 and CIC_ToN_IoT which caused poor results.
 
 ## Datasets
 
@@ -27,22 +23,18 @@ The intent of this revision is not to eliminate the domain discrepancy, but to a
 
 The CORAL framework assumes source and target datasets are represented in the same feature and label spaces before adaptation is applied. To enforce this consistently, shared external contract files are used so both pipelines consume the same canonical definitions.
 
-This project uses a fixed external feature-space contract at
-`data/processed/shared_feature_space.json` to prevent source/target schema drift.
+This project uses shared contract artifacts under `data/processed/`:
 
-For label-space alignment, the project uses shared label artifacts:
-- `data/processed/shared_label_space.json`: canonical ordered list of common labels.
-- `data/processed/source_label_map.json`: maps source raw classes to canonical labels.
-- `data/processed/target_label_map.json`: maps target raw classes to canonical labels.
-
-For target feature-space alignment, the project also uses:
-- `data/processed/target_feature_alias_map.json`: maps canonical shared feature names
-   to raw target-dataset column names.
+- `shared_feature_space.json`: canonical ordered list of shared features.
+- `shared_label_space.json`: canonical ordered list of shared labels.
+- `source_label_map.json`: raw source labels --> shared labels
+- `target_label_map.json`: raw target labels --> shared labels
+- `target_feature_map.json`: raw target features --> shared features
 
 Both datasets are mapped into the same canonical label space before encoding so label
 integers stay consistent across source/target training and evaluation.
 
-- The JSON file contains the canonical ordered list of shared features.
+- The shared feature-space JSON contains the canonical ordered list of shared features.
 - Both preprocessing notebooks consume this file directly.
 - Feature alignment is strict by default:
    - Columns not in the contract are dropped.
