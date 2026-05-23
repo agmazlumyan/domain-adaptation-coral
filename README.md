@@ -6,38 +6,18 @@ A controlled, offline experiment to verify the feasibility and effectiveness of 
 
 Feature space and label space alignment across source and target datasets must be done for CORAL domain adaptation. Label space alignment involves collapsing each dataset's specific attack classes into broader meta-categories representing a shared label space.
 
-In the app, the implemented DA feature will consist of a target-data collection mechanism and will perform preprocessing and covariance calculation in the online app (as opposed to in an offline notebook environment). In this offline test, all procedures and computation will be performed in a notebook environment; the target-domain data (CSE-CIC-IDS2018) will be processed and feature-mapped in advance alongside the source-domain data (CICIDS2017), and CORAL calculation, model inference, and results extraction will be done in the notebooks as well.
+In the app, the implemented DA feature will consist of a target-data collection mechanism and will perform preprocessing and covariance calculation in the online app (as opposed to in an offline notebook environment). In this offline test, all procedures and computation will be performed in a notebook environment; the target-domain data (captured lab data) will be processed and feature-mapped in advance alongside the source-domain data (CICIDS2017), and CORAL calculation, model inference, and results extraction will be done in the notebooks as well.
 
 ## New Version Info
 
-This iteration replaces the previous target dataset with CSE-CIC-IDS2018 to address the severe domain gap between CICIDS2017 and CIC_ToN_IoT which caused poor results.
-
-Using a preliminary linear classifier (SGD hinge), and updated CORAL statistics extraction for improved robustness (shrinkage covariance plus spectral-floor and damping sweeps), CORAL meaningfully reduces cross-domain degradation.
-
-| Evaluation | Accuracy |
-|---|---:|
-| Source test split | 0.8989 |
-| Target test split (no CORAL) | 0.6474 |
-| Target test split (with CORAL, best config) | 0.7382 |
-
-For with-CORAL evaluation, multiple versions of the CORAL-adapted target data are generated and predicted on by the classifier to determine the best performing configuration. Tweaked CORAL parameters and evaluated values are as follows:  
-
-| Hyperparameter | Tested values | Role in adaptation |
-|---|---|---|
-| `eps` (spectral floor) | `[1e-4, 1e-3]` | Stabilizes covariance matrix inverse/square-root operations by flooring small eigenvalues. |
-| `lambda` (damping strength) | `[0.1, 0.25, 0.5, 0.75, 1.0]` | Controls adaptation intensity in `X_adapted = X_target + lambda * (X_coral_full - X_target)`. |
-
-Total configurations evaluated: `2 x 5 = 10`.
-
-Best config in the current run: `eps=1e-4`, `lambda=1.0`.
-
+This iteration uses captured lab data as the target dataset.
 
 ## Datasets
 
 | Role | Dataset |
 |------|---------|
 | Source | CICIDS2017 |
-| Target | CSE-CIC-IDS2018 |
+| Target | captured lab data |
 
 ## Shared Artifacts
 
@@ -64,13 +44,13 @@ integers stay consistent across source/target training and evaluation.
 
 ## Steps
 
-1. **Prepare CICIDS2017 and CSE-CIC-IDS2018**
+1. **Prepare CICIDS2017 and lab data**
    - Apply same preprocessing and scaling
    - Normalize feature space
    - Extract covariance statistics
 2. **Train model on CICIDS2017**
 3. **Calculate CORAL transform**
-4. **Perform model inference on CSE-CIC-IDS2018**
+4. **Perform model inference on lab data**
    - With CORAL
    - Without CORAL
 5. **Compare performance** using ground truth labels
