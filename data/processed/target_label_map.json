@@ -1,12 +1,17 @@
 {
-    "Benign": "Benign",
-    "ddos": "Denial of Service",
-    "dos": "Denial of Service",
-    "scanning": "Probing",
-    "password": "Brute Force",
-    "injection": "Web Injection",
-    "xss": "Web Injection",
-    "backdoor": "Malware",
-    "ransomware": "Malware",
-    "mitm": "Malware"
+  "Benign": "Benign",
+  "Bot": "Bot",
+  "Brute Force -Web": "Web Attack - Brute Force",
+  "Brute Force -XSS": "Web Attack - XSS",
+  "DDOS attack-HOIC": "DDoS",
+  "DDOS attack-LOIC-UDP": "DDoS",
+  "DDoS attacks-LOIC-HTTP": "DDoS",
+  "DoS attacks-GoldenEye": "DoS GoldenEye",
+  "DoS attacks-Hulk": "DoS Hulk",
+  "DoS attacks-SlowHTTPTest": "DoS Slowhttptest",
+  "DoS attacks-Slowloris": "DoS slowloris",
+  "FTP-BruteForce": "FTP-Patator",
+  "Infilteration": "Infiltration",
+  "SQL Injection": "Web Attack - Sql Injection",
+  "SSH-Bruteforce": "SSH-Patator"
 }

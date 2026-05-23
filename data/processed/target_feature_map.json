@@ -1,8 +1,10 @@
 {
+  "Destination Port": "Dst Port",
   "Flow Duration": "Flow Duration",
   "Total Fwd Packets": "Tot Fwd Pkts",
   "Total Backward Packets": "Tot Bwd Pkts",
   "Total Length of Fwd Packets": "TotLen Fwd Pkts",
+  "Total Length of Bwd Packets": "TotLen Bwd Pkts",
   "Fwd Packet Length Max": "Fwd Pkt Len Max",
   "Fwd Packet Length Min": "Fwd Pkt Len Min",
   "Fwd Packet Length Mean": "Fwd Pkt Len Mean",
@@ -28,7 +30,9 @@
   "Bwd IAT Max": "Bwd IAT Max",
   "Bwd IAT Min": "Bwd IAT Min",
   "Fwd PSH Flags": "Fwd PSH Flags",
+  "Bwd PSH Flags": "Bwd PSH Flags",
   "Fwd URG Flags": "Fwd URG Flags",
+  "Bwd URG Flags": "Bwd URG Flags",
   "Fwd Header Length": "Fwd Header Len",
   "Bwd Header Length": "Bwd Header Len",
   "Fwd Packets/s": "Fwd Pkts/s",
@@ -50,7 +54,12 @@
   "Average Packet Size": "Pkt Size Avg",
   "Avg Fwd Segment Size": "Fwd Seg Size Avg",
   "Avg Bwd Segment Size": "Bwd Seg Size Avg",
-  "Fwd Header Length.1": "Fwd Header Len",
+  "Fwd Avg Bytes/Bulk": "Fwd Byts/b Avg",
+  "Fwd Avg Packets/Bulk": "Fwd Pkts/b Avg",
+  "Fwd Avg Bulk Rate": "Fwd Blk Rate Avg",
+  "Bwd Avg Bytes/Bulk": "Bwd Byts/b Avg",
+  "Bwd Avg Packets/Bulk": "Bwd Pkts/b Avg",
+  "Bwd Avg Bulk Rate": "Bwd Blk Rate Avg",
   "Subflow Fwd Packets": "Subflow Fwd Pkts",
   "Subflow Fwd Bytes": "Subflow Fwd Byts",
   "Subflow Bwd Packets": "Subflow Bwd Pkts",
@@ -66,5 +75,6 @@
   "Idle Mean": "Idle Mean",
   "Idle Std": "Idle Std",
   "Idle Max": "Idle Max",
-  "Idle Min": "Idle Min"
+  "Idle Min": "Idle Min",
+  "Label": "Label"
 }

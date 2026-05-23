@@ -1,8 +1,15 @@
 [
   "Benign",
-  "Denial of Service",
-  "Probing",
-  "Brute Force",
-  "Web Injection",
-  "Malware"
+  "DDoS",
+  "DoS GoldenEye",
+  "DoS Hulk",
+  "DoS Slowhttptest",
+  "DoS slowloris",
+  "FTP-Patator",
+  "SSH-Patator",
+  "Web Attack - Brute Force",
+  "Web Attack - Sql Injection",
+  "Web Attack - XSS",
+  "Bot",
+  "Infiltration"
 ]
