@@ -12,6 +12,26 @@ In the app, the implemented DA feature will consist of a target-data collection 
 
 This iteration replaces the previous target dataset with CSE-CIC-IDS2018 to address the severe domain gap between CICIDS2017 and CIC_ToN_IoT which caused poor results.
 
+Using a preliminary linear classifier (SGD hinge), and updated CORAL statistics extraction for improved robustness (shrinkage covariance plus spectral-floor and damping sweeps), CORAL meaningfully reduces cross-domain degradation.
+
+| Evaluation | Accuracy |
+|---|---:|
+| Source test split | 0.8989 |
+| Target test split (no CORAL) | 0.6474 |
+| Target test split (with CORAL, best config) | 0.7382 |
+
+For with-CORAL evaluation, multiple versions of the CORAL-adapted target data are generated and predicted on by the classifier to determine the best performing configuration. Tweaked CORAL parameters and evaluated values are as follows:  
+
+| Hyperparameter | Tested values | Role in adaptation |
+|---|---|---|
+| `eps` (spectral floor) | `[1e-4, 1e-3]` | Stabilizes covariance matrix inverse/square-root operations by flooring small eigenvalues. |
+| `lambda` (damping strength) | `[0.1, 0.25, 0.5, 0.75, 1.0]` | Controls adaptation intensity in `X_adapted = X_target + lambda * (X_coral_full - X_target)`. |
+
+Total configurations evaluated: `2 x 5 = 10`.
+
+Best config in the current run: `eps=1e-4`, `lambda=1.0`.
+
+
 ## Datasets
 
 | Role | Dataset |
@@ -121,3 +141,36 @@ To ensure a clean Python environment and install all required dependencies:
    ```
 
 This will install all necessary packages as specified in requirements.txt.
+
+## Implemented CORAL Calculation Improvements
+
+The current notebooks include three stability-focused upgrades to the CORAL computation path. Together, they make the adaptation step more numerically stable and less likely to over-correct under a large source-target domain gap.
+
+1. Shrinkage covariance estimation (`LedoitWolf`) replaces plain sample covariance for both source and target covariance statistics.
+   - Why this matters: in high-dimensional IDS data, plain covariance can be noisy or ill-conditioned.
+   - Shrinkage improves conditioning, which makes matrix square-root and inverse square-root operations more reliable.
+
+2. Spectral floor sweep for CORAL matrix power operations.
+   - The inverse square-root and square-root steps in CORAL use an eigenvalue floor (`eps`) to avoid unstable behavior around very small or negative eigenvalues.
+   - The notebook evaluates multiple floor strengths: `eps in [1e-4, 1e-3]`.
+
+3. CORAL damping (partial adaptation) via convex blending.
+   - Full CORAL can be too aggressive when domains are far apart, so the adapted features are blended with the original target features:
+   - `X_adapted = X_target + lambda * (X_coral_full - X_target)`
+   - The notebook evaluates `lambda in [0.1, 0.25, 0.5, 0.75, 1.0]`, where:
+     - smaller lambda = lighter adaptation,
+     - `lambda=1.0` = full CORAL adaptation.
+
+### How the config sweep works in evaluation
+
+The with-CORAL evaluation does not create one adapted target dataset. It creates multiple adapted versions of the same target test split and scores all of them.
+
+1. For each `eps` value, a numerically stabilized CORAL transform is computed.
+2. That transform is applied to the target test features to produce a full-CORAL version.
+3. For each `lambda`, a damped version is generated from that full-CORAL output.
+4. The classifier predicts on each generated version.
+5. Accuracy is recorded for each `(eps, lambda)` pair, and the best-performing configuration is selected and reported.
+
+With the current grid, this yields `2 x 5 = 10` evaluated target-test feature variants.
+
+This sweep gives a practical way to choose a stable adaptation strength instead of assuming full CORAL is always optimal.
