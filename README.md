@@ -18,6 +18,14 @@ Attack samples from csecicids2018 were injected into the benign-only lab data at
 
 The decision to include attacks in the train split which coral "learns" from was a choice influenced by a previous experiment's attack recall collapse caused by benign-only learning. However the most recent experiment (coral learning from a benign+attack train split) also resulted in recall collapse, likely caused by insufficient data size.
 
+Using a preliminary linear classifier (SGD hinge) for evaluation, coral improved headline accuracy but collapsed recall. The coral transformation essentially made the classifier a benign-only predicter.
+
+| Evaluation | Accuracy |
+|---|---|
+| Source test split | 0.8996 |
+| Target test split (no CORAL) | 0.6705 |
+| Target test split (with CORAL, best config) | 0.7425 |
+
 ## Datasets
 
 | Role | Dataset |
