@@ -31,6 +31,14 @@ Total configurations evaluated: `2 x 5 = 10`.
 
 Best config in the current run: `eps=1e-4`, `lambda=1.0`.
 
+### Benign-only target test split fail
+
+A benign-only target-train split was also tested for CORAL statistics extraction. This configuration increased headline target accuracy, but caused a severe collapse in attack recall.
+
+Why this happened:
+- Target covariance/mean estimated from benign-only data biased the CORAL alignment toward benign structure.
+- The classifier then over-predicted the benign class on target test samples.
+- Result: accuracy increased due to class imbalance, while macro metrics and attack detection quality degraded.
 
 ## Datasets
 
