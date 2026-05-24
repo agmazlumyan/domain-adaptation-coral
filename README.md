@@ -34,8 +34,6 @@ This project uses shared contract artifacts under `data/processed/`:
 - `shared_feature_space.json`: canonical ordered list of shared features.
 - `shared_label_space.json`: canonical ordered list of shared labels.
 - `source_label_map.json`: raw source labels --> shared labels
-- `target_label_map.json`: raw target labels --> shared labels
-- `target_feature_map.json`: raw target features --> shared features
 
 Both datasets are mapped into the same canonical label space before encoding so label
 integers stay consistent across source/target training and evaluation.
@@ -63,21 +61,20 @@ integers stay consistent across source/target training and evaluation.
 
 ## Preprocessing Notebook Steps
 
-The tables below reflect the current cell-title steps from both preprocessing notebooks.
+The tables below reflect the current non-diagnostic cell-title steps from both preprocessing notebooks.
 
 | src_preprocessing.ipynb | trg_preprocessing.ipynb |
 |---|---|
 | 1. Imports | 1. Imports |
-| 2. Load and concatenate CSVs | 2. Load and concatenate CSVs |
-| 3. Data sanitization | 3. Data reduction |
-| 4. Feature-space alignment | 4. Data sanitization |
+| 2. Import and concatenate CSVs | 2. Import and parse JSON files |
+| 3. Data sanitization | 3. Data sanitization |
+| 4. Feature-space alignment | 4. Inject attack samples into data |
 | 5. Label-space alignment | 5. Feature-space alignment |
-| 6. Train/Test Split (80/20) | 6. Label-space alignment |
-| 7. Scaling (fit to source and save) | 7. Train/Test Split (80/20) |
-| 8. Label encoding (fit to source and save) | 8. Scaling (reuse source-fitted scaler) |
-| 9. Calculate and export covariance and mean statistics | 9. Label encoding (reuse source-fitted encoder) |
-| 10. Export processed data | 10. Calculate and export covariance and mean statistics |
-|  | 11. Export processed data |
+| 6. Train/Test Split | 6. Label-space alignment |
+| 7. Scaling (apply imported scaler) | 7. Train/Test Split |
+| 8. Label encoding (save encoder for target data processing) | 8. Label encoding (reuse encoder of shared label space) |
+| 9. Calculate and export covariance and mean statistics | 9. Calculate and export covariance and mean statistics |
+| 10. Export processed data | 10. Export processed data |
 
 ## Execution Order
 
