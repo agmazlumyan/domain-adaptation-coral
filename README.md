@@ -10,7 +10,13 @@ In the app, the implemented DA feature will consist of a target-data collection 
 
 ## New Version Info
 
-This iteration uses captured lab data as the target dataset.
+This iteration uses captured lab data as the target dataset. The data captured from the lab was scaled by the IDS capture pipeline; lab data from the json files are pre-scaled. The same scaler object used during capture is imported and used to scale the source data in src_preprocessing.ipynb to ensure consistency.
+
+The lab collected dataset is substantially smaller than the previous target (csecicids2018) and source (cicids2017) datasets in number of rows, and reduced feature set. This is because of the nfstream to cicflowmeter capture technology discrepancy resulting in dropped columns in the IDS app's feature mapping stage. To account for this, the shared schema artifact shared_feature_space.json was reduced from the original 77 feature schema to the 70 feature structure of the captured data. 
+
+Attack samples from csecicids2018 were injected into the benign-only lab data at a benign/attack proportion of roughly 75/25. Injection took place before train/test splitting; attack samples were present in the train split from which coral statistics were extracted and in the test split which the classifier was evaluated on with and without the coral transform applied.
+
+The decision to include attacks in the train split which coral "learns" from was a choice influenced by a previous experiment's attack recall collapse caused by benign-only learning. However the most recent experiment (coral learning from a benign+attack train split) also resulted in recall collapse, likely caused by insufficient data size.
 
 ## Datasets
 

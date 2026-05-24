@@ -1,5 +1,6 @@
 {
   "BENIGN": "Benign",
+  "Benign": "Benign",
   "DDoS": "DDoS",
   "DoS GoldenEye": "DoS GoldenEye",
   "DoS Hulk": "DoS Hulk",
@@ -13,6 +14,9 @@
   "Web Attack � Brute Force": "Web Attack - Brute Force",
   "Web Attack � Sql Injection": "Web Attack - Sql Injection",
   "Web Attack � XSS": "Web Attack - XSS",
+  "Web Attack - Brute Force": "Web Attack - Brute Force",
+  "Web Attack - Sql Injection": "Web Attack - Sql Injection",
+  "Web Attack - XSS": "Web Attack - XSS",
   "Bot": "Bot",
   "Infiltration": "Infiltration"
 }
