@@ -26,6 +26,8 @@ Using a preliminary linear classifier (SGD hinge) for evaluation, coral improved
 | Target test split (no CORAL) | 0.6705 |
 | Target test split (with CORAL, best config) | 0.7425 |
 
+Implementing 2 improvements to the data processing procedures, ie (1) standardizing source data benign/attack proportion to match that of target (75/25), and (2) changing the coral parameter sweep best-configuration selection metric from accuracy to macro recall, did not improve coral results. In fact they, further elucidated the negative impact of coral by unveiling the inflated accuracy  results caused by benign-prediction domination and demonstrating direct recall collapse caused by using coral.
+
 ## Datasets
 
 | Role | Dataset |
