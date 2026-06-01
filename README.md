@@ -10,7 +10,7 @@ In the app, the implemented DA feature will consist of a target-data collection 
 
 ## Latest Version Info
 
-Final experimentation was conducted with 3 classifiers across both target domains without supervised enhancement (to maintain traditional coral assumptions), and coral results were poor. Recall for all classes was nearly eliminated with the coral transformation applied; these results are presented in the first iteration of the research paper.
+Final experimentation was conducted with 3 classifiers across both target domains without supervised enhancement (to maintain traditional coral assumptions), and coral results were poor. Recall for all classes was nearly eliminated with the coral transformation applied; these results are presented in the first iteration of the research paper. This version of the paper (unfinished) is included here in this project as `paper-6-1-26.pdf` to preserve a copy of the paper reflecting the target-to-source experiment procedures.
 
 The next version of the paper and the corresponding study conducted in this codebase will instead implement traditional source-to-target coral as opposed to the previous target-to-source. Required code changes are limited to the training/eval notebook, therefore a new version of the notebook was created named `coral_s2t_train_eval.ipynb` for the refactored implementation, while the previous notebook was preserved and renamed `coral_t2s_train_eval.ipynb`.
 
