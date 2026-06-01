@@ -20,6 +20,10 @@ Using a preliminary linear classifier (SGD hinge), and updated CORAL statistics 
 | Target test split (no CORAL) | 0.6474 |
 | Target test split (with CORAL, best config) | 0.7382 |
 
+Coral parameter sweeps logic was removed for final experimentation to maintain unsupervised assumption of traditional coral theory.
+
+### [Old] Parameter Sweeps for Supervised CORAL enhancement ###
+
 For with-CORAL evaluation, multiple versions of the CORAL-adapted target data are generated and predicted on by the classifier to determine the best performing configuration. Tweaked CORAL parameters and evaluated values are as follows:  
 
 | Hyperparameter | Tested values | Role in adaptation |
