@@ -8,9 +8,15 @@ Feature space and label space alignment across source and target datasets must b
 
 In the app, the implemented DA feature will consist of a target-data collection mechanism and will perform preprocessing and covariance calculation in the online app (as opposed to in an offline notebook environment). In this offline test, all procedures and computation will be performed in a notebook environment; the target-domain data (CSE-CIC-IDS2018) will be processed and feature-mapped in advance alongside the source-domain data (CICIDS2017), and CORAL calculation, model inference, and results extraction will be done in the notebooks as well.
 
-## New Version Info
+## Latest Version Info
 
-This iteration replaces the previous target dataset with CSE-CIC-IDS2018 to address the severe domain gap between CICIDS2017 and CIC_ToN_IoT which caused poor results.
+Final experimentation was conducted with 3 classifiers across both target domains without supervised enhancement (to maintain traditional coral assumptions), and coral results were poor. Recall for all classes was nearly eliminated with the coral transformation applied; these results are presented in the first iteration of the research paper.
+
+The next version of the paper and the corresponding study conducted in this codebase will instead implement traditional source-to-target coral as opposed to the previous target-to-source. Required code changes are limited to the training/eval notebook, therefore a new version of the notebook was created named `coral_s2t_train_eval.ipynb` for the refactored implementation, while the previous notebook was preserved and renamed `coral_t2s_train_eval.ipynb`.
+
+## Changes in Previous Versions
+
+### Preliminary test ###
 
 Using a preliminary linear classifier (SGD hinge), and updated CORAL statistics extraction for improved robustness (shrinkage covariance plus spectral-floor and damping sweeps), CORAL meaningfully reduces cross-domain degradation.
 
@@ -20,9 +26,7 @@ Using a preliminary linear classifier (SGD hinge), and updated CORAL statistics 
 | Target test split (no CORAL) | 0.6474 |
 | Target test split (with CORAL, best config) | 0.7382 |
 
-Coral parameter sweeps logic was removed for final experimentation to maintain unsupervised assumption of traditional coral theory.
-
-### [Old] Parameter Sweeps for Supervised CORAL enhancement ###
+### Parameter Sweeps for Supervised CORAL enhancement ###
 
 For with-CORAL evaluation, multiple versions of the CORAL-adapted target data are generated and predicted on by the classifier to determine the best performing configuration. Tweaked CORAL parameters and evaluated values are as follows:  
 
