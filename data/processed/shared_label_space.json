@@ -6,10 +6,5 @@
   "DoS Slowhttptest",
   "DoS slowloris",
   "FTP-Patator",
-  "SSH-Patator",
-  "Web Attack - Brute Force",
-  "Web Attack - Sql Injection",
-  "Web Attack - XSS",
-  "Bot",
-  "Infiltration"
+  "SSH-Patator"
 ]
